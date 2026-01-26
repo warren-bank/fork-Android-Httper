@@ -1,0 +1,56 @@
+# GreenDAO
+# ------------------------------------------------------------------------------
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties {*;}
+
+# If you do not use SQLCipher:
+-dontwarn net.sqlcipher.database.**
+
+# If you do not use RxJava:
+-dontwarn rx.**
+# ------------------------------------------------------------------------------ /GreenDAO
+
+# OkHttp
+# ------------------------------------------------------------------------------
+# JSR 305 annotations are for embedding nullability information.
+-dontwarn javax.annotation.**
+
+# A resource is loaded with a relative path so the package of this class must be preserved.
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+
+# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
+-dontwarn org.codehaus.mojo.animal_sniffer.*
+
+# OkHttp platform used only on JVM and when Conscrypt dependency is available.
+-dontwarn okhttp3.internal.platform.ConscryptPlatform
+# ------------------------------------------------------------------------------ /OkHttp
+
+# Conscrypt
+# ------------------------------------------------------------------------------
+# https://github.com/google/conscrypt/blob/2.5.2/android/proguard-rules.pro
+# ------------------------------------------------------------------------------
+# Many of the Conscrypt classes are referenced indirectly via JNI or reflection.
+# This could probably be tightened up, but this will get it building for now.
+-keep class org.conscrypt.** { *; }
+
+# Backward compatibility code.
+-dontnote libcore.io.Libcore
+-dontnote org.apache.harmony.xnet.provider.jsse.OpenSSLRSAPrivateKey
+-dontnote org.apache.harmony.security.utils.AlgNameMapper
+-dontnote sun.security.x509.AlgorithmId
+
+-dontwarn dalvik.system.BlockGuard
+-dontwarn dalvik.system.BlockGuard$Policy
+-dontwarn dalvik.system.CloseGuard
+-dontwarn com.android.org.conscrypt.AbstractConscryptSocket
+-dontwarn com.android.org.conscrypt.ConscryptFileDescriptorSocket
+-dontwarn com.android.org.conscrypt.OpenSSLSocketImpl
+-dontwarn org.apache.harmony.xnet.provider.jsse.OpenSSLSocketImpl
+# ------------------------------------------------------------------------------
+# missing_rules:
+# ------------------------------------------------------------------------------
+-dontwarn com.android.org.conscrypt.SSLParametersImpl
+-dontwarn org.apache.harmony.xnet.provider.jsse.SSLParametersImpl
+# ------------------------------------------------------------------------------ /Conscrypt

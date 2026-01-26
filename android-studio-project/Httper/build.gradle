@@ -1,0 +1,87 @@
+apply from: '../constants.gradle'
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+  namespace project.ext.applicationId
+
+  compileSdkVersion project.ext.compileSdkVersion
+  buildToolsVersion project.ext.buildToolsVersion
+
+  compileOptions {
+    sourceCompatibility project.ext.javaVersion
+    targetCompatibility project.ext.javaVersion
+  }
+
+  defaultConfig {
+    minSdkVersion    project.ext.minSdkVersion
+    targetSdkVersion project.ext.targetSdkVersion
+
+    applicationId project.ext.applicationId
+    versionName   project.ext.releaseVersion
+    versionCode   project.ext.releaseVersionCode
+
+    archivesBaseName += "-$versionName"
+  }
+
+  buildTypes {
+    release {
+      debuggable      false
+      jniDebuggable   false
+      shrinkResources true
+      minifyEnabled   true
+      proguardFiles = [
+        "proguard-rules.txt",
+        getDefaultProguardFile('proguard-android.txt')
+      ]
+    }
+    debug {
+      debuggable      true
+      jniDebuggable   true
+      shrinkResources false
+      minifyEnabled   false
+    }
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  splits {
+    abi {
+      enable true
+      reset()
+      include "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+      universalApk false
+    }
+  }
+
+  dependenciesInfo {
+    includeInApk    = false  // Disables dependency metadata when building APKs.
+    includeInBundle = false  // Disables dependency metadata when building Android App Bundles.
+  }
+
+  lintOptions {
+    disable 'MissingTranslation'
+    abortOnError false
+  }
+}
+
+greendao {
+  schemaVersion 2
+}
+
+dependencies {
+  implementation 'androidx.appcompat:appcompat:1.6.0'                         // https://mvnrepository.com/artifact/androidx.appcompat/appcompat?repo=google
+  implementation 'androidx.constraintlayout:constraintlayout:2.1.4'           // https://mvnrepository.com/artifact/androidx.constraintlayout/constraintlayout?repo=google
+  implementation 'androidx.recyclerview:recyclerview:1.2.1'                   // https://mvnrepository.com/artifact/androidx.recyclerview/recyclerview?repo=google
+  implementation 'com.google.android.material:material:1.7.0'                 // https://mvnrepository.com/artifact/com.google.android.material/material?repo=google
+  implementation 'com.mikepenz:fastadapter-commons:2.6.3@aar'                 // https://mvnrepository.com/artifact/com.mikepenz/fastadapter-commons
+  implementation 'com.mikepenz:fastadapter:2.6.3@aar'                         // https://mvnrepository.com/artifact/com.mikepenz/fastadapter
+  implementation 'com.squareup.okhttp3:okhttp:3.12.3'                         // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
+  implementation 'org.conscrypt:conscrypt-android:2.5.2'                      // https://mvnrepository.com/artifact/org.conscrypt/conscrypt-android
+  implementation 'org.greenrobot:greendao:3.3.0'                              // https://mvnrepository.com/artifact/org.greenrobot/greendao
+  implementation 'me.grantland:autofittextview:0.2.1'                         // https://mvnrepository.com/artifact/me.grantland/autofittextview
+
+  debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'       // https://mvnrepository.com/artifact/com.squareup.leakcanary/leakcanary-android
+}
