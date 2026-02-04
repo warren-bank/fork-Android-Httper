@@ -1,7 +1,7 @@
 project.ext {
   applicationId      = 'org.mushare.httper'
-  releaseVersionCode = 7
-  releaseVersion     = '1.04.03-periodic-requests-service'
+  releaseVersionCode = 8
+  releaseVersion     = '1.04.04-periodic-requests-service'
   javaVersion        = JavaVersion.VERSION_1_8
   minSdkVersion      = 15
   targetSdkVersion   = 35
